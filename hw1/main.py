@@ -18,6 +18,9 @@ def test():
     assert classify_triangle(4,4,5) == "isosceles"
     assert classify_triangle(3,3,3) == "equilateral"
     assert classify_triangle(3,3,4) != "equilateral"
+    assert classify_triangle(3,3,4) != "scalene right"
+    assert classify_triangle(3,3,4) != "scalene"
+    assert classify_triangle(3,3.5,4) != "isosceles"
 
 if __name__ == "__main__":
     test()
