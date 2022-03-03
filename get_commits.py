@@ -2,9 +2,12 @@ import requests
 import json
 
 def get_commits():
-    x = input('Enter GitHub Username: ')
-    r = requests.get('https://api.github.com/users/' + x + '/repos')
-    repos = json.loads(r.text)
+    x = 'willmartin00'
+    r = get_repos(x)
+    if isinstance(r, str):
+        repos = json.loads(r)
+    else:
+        repos = json.loads(r.text)
     repo_lookup = []
     commits_list = []
 
@@ -21,8 +24,11 @@ def get_commits():
     u = 0
 
     for k in repo_lookup:
-        r = requests.get('https://api.github.com/repos/' + x + '/' + k + '/commits')
-        commits = json.loads(r.text)
+        r = get_commits_sub(x,k)
+        if isinstance(r, str):
+            commits = json.loads(r)
+        else:
+            commits = json.loads(r.text)
         for v in commits:
             commit_counter[u] = commit_counter[u] + 1
         u = u + 1
@@ -32,6 +38,12 @@ def get_commits():
     for k in repo_lookup:
         print('Repo: ' + k + ' Number of commits: ' + str(commit_counter[u]))
         u = u + 1
+
+def get_commits_sub(x, k):
+    return requests.get('https://api.github.com/repos/' + x + '/' + k + '/commits')
+
+def get_repos(x):
+    return requests.get('https://api.github.com/users/' + x + '/repos')
 
 if __name__ == "__main__":
     get_commits()
