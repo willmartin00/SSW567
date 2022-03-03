@@ -2,7 +2,7 @@ import requests
 import json
 
 def get_commits():
-    x = 'willmartin00'
+    x = input('Enter GitHub Username: ')
     r = get_repos(x)
     if isinstance(r, str):
         repos = json.loads(r)
